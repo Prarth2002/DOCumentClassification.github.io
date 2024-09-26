@@ -14,9 +14,10 @@ from streamlit_lottie import st_lottie  # Lottie import
 lottie_animation_url = "https://lottie.host/c1b82357-ac83-4d42-95c7-931d7c7c8584/GRhvzcNSys.json"
 lottie_animation = lottie_animation_url
 
-# Set up Tesseract path
-tesseract_path = "/usr/bin/tesseract"  # Default path for Tesseract in Ubuntu
-pytesseract.pytesseract.tesseract_cmd = tesseract_path
+
+# Set the Tesseract path to where it is installed in your environment
+pytesseract.pytesseract.tesseract_cmd = '/usr/bin/tesseract'
+
 
 # Define document types and their associated keywords
 document_keywords = {
