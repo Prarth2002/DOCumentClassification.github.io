@@ -15,7 +15,8 @@ lottie_animation_url = "https://lottie.host/c1b82357-ac83-4d42-95c7-931d7c7c8584
 lottie_animation = lottie_animation_url
 
 # Set up Tesseract path
-pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
+tesseract_path = "/usr/bin/tesseract"  # Default path for Tesseract in Ubuntu
+pytesseract.pytesseract.tesseract_cmd = tesseract_path
 
 # Define document types and their associated keywords
 document_keywords = {
