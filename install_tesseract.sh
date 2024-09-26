@@ -1,14 +1,13 @@
 #!/bin/bash
-# Update package list and install Tesseract
-apt-get update && apt-get install -y tesseract-ocr
+set -e  # Exit immediately if a command exits with a non-zero status
 
-# Output the current PATH for debugging
-echo "Current PATH: $PATH"
+echo "Updating package list..."
+apt-get update
 
-# Verify installation and output the version
-if command -v tesseract &> /dev/null; then
-    echo "Tesseract installed successfully."
-    tesseract --version
-else
-    echo "Tesseract installation failed."
-fi
+echo "Installing Tesseract..."
+apt-get install -y tesseract-ocr
+
+echo "Installing Poppler utilities..."
+apt-get install -y poppler-utils
+
+echo "Installation completed."
