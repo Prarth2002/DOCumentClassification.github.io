@@ -27,6 +27,3 @@ openpyxl
 xlrd 
 pdf2image
 PyMuPDF
-# Attempt to install system-level packages
-!apt-get update && apt-get install -y poppler-utils
-!apt-get update && apt-get install -y tesseract-ocr
