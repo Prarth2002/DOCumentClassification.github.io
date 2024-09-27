@@ -3,21 +3,17 @@ import tempfile
 import pandas as pd
 import streamlit as st
 from pdf2image import convert_from_path
-from PIL import Image
 import re
-from fuzzywuzzy import process
-import pytesseract
 import concurrent.futures
 from streamlit_lottie import st_lottie  # Lottie import
+import easyocr  # Import EasyOCR
 
 # Load the Lottie animation
 lottie_animation_url = "https://lottie.host/c1b82357-ac83-4d42-95c7-931d7c7c8584/GRhvzcNSys.json"
 lottie_animation = lottie_animation_url
 
-
-# Set the Tesseract path to where it is installed in your environment
-pytesseract.pytesseract.tesseract_cmd = '/usr/bin/tesseract'
-
+# Initialize EasyOCR reader
+reader = easyocr.Reader(['en'])  # Specify languages as needed
 
 # Define document types and their associated keywords
 document_keywords = {
@@ -34,9 +30,10 @@ def pdf_to_images(pdf_path, dpi=300):
     images = convert_from_path(pdf_path, dpi=dpi)
     return images
 
-# OCR function to extract text from images
+# OCR function to extract text from images using EasyOCR
 def ocr_image(image):
-    return pytesseract.image_to_string(image)
+    result = reader.readtext(image)
+    return ' '.join([text[1] for text in result])  # Extract text from EasyOCR output
 
 # Function to extract text from a PDF
 def extract_text_from_pdf(pdf_path):
@@ -56,6 +53,8 @@ def classify_document(text, document_keywords, min_keyword_matches=2):
         if match_count >= min_keyword_matches:
             doc_matches[doc_type] = match_count
     return max(doc_matches, key=doc_matches.get) if doc_matches else "Unknown"
+
+
 # Function to extract keywords based on document type
 def extract_keywords_based_on_document(text, document_type):
     """Extract key values from the document based on its classified type."""
