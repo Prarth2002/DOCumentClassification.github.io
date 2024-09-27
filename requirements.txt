@@ -3,8 +3,6 @@ pandas
 googletrans==4.0.0-rc1  
 pytesseract
 sudo apt-get update
-sudo apt-get install -y tesseract-ocr
-sudo apt-get install -y poppler-utils
 openpyxl 
 xlrd                      
 numpy 
@@ -30,3 +28,6 @@ openpyxl
 xlrd 
 pdf2image
 PyMuPDF
+# Attempt to install system-level packages
+!apt-get update && apt-get install -y poppler-utils
+!apt-get update && apt-get install -y tesseract-ocr
