@@ -1,5 +1,4 @@
-!pip install pdf2image
-!pip install PuMuPDF
+
 sudo apt-get update
 sudo apt-get install -y tesseract-ocr libtesseract-dev
 sudo apt-get install -y tesseract-ocr-spa
