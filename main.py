@@ -12,8 +12,8 @@ import easyocr  # Import EasyOCR
 lottie_animation_url = "https://lottie.host/c1b82357-ac83-4d42-95c7-931d7c7c8584/GRhvzcNSys.json"
 lottie_animation = lottie_animation_url
 
-# Initialize EasyOCR reader
-reader = easyocr.Reader(['en'])  # Specify languages as needed
+# Initialize EasyOCR Reader
+reader = easyocr.Reader(['en'])  # Specify the languages you want to support
 
 # Define document types and their associated keywords
 document_keywords = {
@@ -32,8 +32,8 @@ def pdf_to_images(pdf_path, dpi=300):
 
 # OCR function to extract text from images using EasyOCR
 def ocr_image(image):
-    result = reader.readtext(image)
-    return ' '.join([text[1] for text in result])  # Extract text from EasyOCR output
+    result = reader.readtext(image, detail=0)
+    return "\n".join(result)
 
 # Function to extract text from a PDF
 def extract_text_from_pdf(pdf_path):
@@ -53,8 +53,7 @@ def classify_document(text, document_keywords, min_keyword_matches=2):
         if match_count >= min_keyword_matches:
             doc_matches[doc_type] = match_count
     return max(doc_matches, key=doc_matches.get) if doc_matches else "Unknown"
-
-
+    
 # Function to extract keywords based on document type
 def extract_keywords_based_on_document(text, document_type):
     """Extract key values from the document based on its classified type."""
@@ -149,20 +148,18 @@ def write_results_to_file(pdf_results, excel_results):
     with tempfile.NamedTemporaryFile(delete=False, suffix=".txt", mode='w', encoding='utf-8') as output_file:
         for doc_type, keywords, property_desc in pdf_results:
             output_file.write(f"Document Type: {doc_type}\n")
+            output_file.write("Extracted Keywords:\n")
             for key, value in keywords.items():
                 output_file.write(f"{key}: {value}\n")
-            output_file.write(f"Property Description: {property_desc}\n")
-            output_file.write("\n\n")
+            output_file.write("\n")
 
-        output_file.write(f"Excel Results:\n")
-        for excel_result in excel_results:
-            # Format the DataFrame to show in a vertical format
-            for index, row in excel_result.iterrows():
-                for col_name, value in row.items():
-                    output_file.write(f"{col_name}: {value}\n")
-                output_file.write("\n")  # Newline after each row for spacing
+        output_file.write("Excel Search Results:\n")
+        for result in excel_results:
+            output_file.write(f"{result}\n")
 
-    return output_file.name
+        return output_file.name
+
+# Streamlit UI
 
 # Streamlit Interface
 # Sidebar Styling
