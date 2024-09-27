@@ -2,7 +2,6 @@
 pandas
 googletrans==4.0.0-rc1  
 pytesseract
-sudo apt-get update
 openpyxl 
 xlrd                      
 numpy 
